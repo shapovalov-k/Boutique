@@ -28,3 +28,7 @@ products << Book.new(title: "Идиот", genre: "роман", author: "Федо
 puts 'Вот какие товары у нас есть:'
 puts
 products.each { |product| puts product }
+
+products[0].update(title: "Koko", amount: 1000)
+
+puts products[0]
