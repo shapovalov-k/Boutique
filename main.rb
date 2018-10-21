@@ -17,18 +17,17 @@ require_relative 'lib/film'
 require_relative 'lib/book'
 require_relative 'lib/disc'
 require_relative 'lib/product_collection'
+require_relative 'lib/client_basket'
 
 product_collection = ProductCollection.from_dir(File.dirname(__FILE__) + '/data')
-
 product_collection.sort!(by: :price, order: :asc)
 
+client_basket = ClientBasket.new
+
 user_input = nil
-price = 0
-user_basket = []
 
 while user_input != 0
-
-  puts "Что хотите купить:"
+  puts "\nЧто хотите купить:"
 
   product_collection.to_a.each_with_index do |product, index|
     puts "#{index + 1}. #{product}"
@@ -39,20 +38,21 @@ while user_input != 0
 
   user_choice = product_collection.products[user_input - 1]
 
-  puts user_choice
 
-  if user_input != 0
-    user_basket << user_choice
-    puts user_choice.update(amount: user_choice.amount.to_i - 1 )
-    price += user_choice.price.to_i
+  if (user_input != 0) && (user_choice.amount.to_i > 0)
+    puts puts "Вы выбрали: #{user_choice}"
 
-    puts "Вы выбрали: #{user_choice}"
-    puts "Всего товаров на сумму: #{price} руб."
+    puts client_basket.add_new_product(user_choice)
+
+    puts "Всего товаров на сумму:"
+    puts client_basket.show_basket_price
+  elsif user_choice.amount.to_i == 0
+    puts "К сожалению, этот товар уже закончился."
   else
     puts "Вы купили:"
-    user_basket.each { |choice| puts choice}
+    client_basket.items.each { |item| puts item }
 
-    puts "С Вас — #{price} руб. Спасибо за покупки!"
+    puts "С Вас — #{client_basket.show_basket_price} руб. Спасибо за покупки!"
   end
 end
 
