@@ -15,24 +15,46 @@ end
 require_relative 'lib/product'
 require_relative 'lib/film'
 require_relative 'lib/book'
+require_relative 'lib/disc'
 require_relative 'lib/product_collection'
 
 product_collection = ProductCollection.from_dir(File.dirname(__FILE__) + '/data')
 
 product_collection.sort!(by: :price, order: :asc)
 
-product_collection.to_a.each do |product|
-  puts product
+user_input = nil
+price = 0
+user_basket = []
+
+while user_input != 0
+
+  puts "Что хотите купить:"
+
+  product_collection.to_a.each_with_index do |product, index|
+    puts "#{index + 1}. #{product}"
+  end
+  puts "0. Выход"
+
+  user_input = STDIN.gets.to_i
+
+  user_choice = product_collection.products[user_input - 1]
+
+  puts user_choice
+
+  if user_input != 0
+    user_basket << user_choice
+    puts user_choice.update(amount: user_choice.amount.to_i - 1 )
+    price += user_choice.price.to_i
+
+    puts "Вы выбрали: #{user_choice}"
+    puts "Всего товаров на сумму: #{price} руб."
+  else
+    puts "Вы купили:"
+    user_basket.each { |choice| puts choice}
+
+    puts "С Вас — #{price} руб. Спасибо за покупки!"
+  end
 end
 
-# current_path = File.dirname(__FILE__)
-# film = Film.from_file(current_path + '/data/films/1.txt')
-# book = Film.from_file(current_path + '/data/books/1.txt')
 
-# products = []
-# products << Film.new(title: "Leon", year: 1994, director: "Люк Бессон", price: 990, amount: 5)
-# products << Film.new(title: "Дурак", year: 2014, director: "Юрий Быков", price: 390, amount: 1)
-# products << Book.new(title: "Идиот", genre: "роман", author: "Федор Достоевский", price: 1500, amount: 10)
-# puts 'Вот какие товары у нас есть:'
-# products.each { |product| puts product }
 
