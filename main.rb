@@ -29,7 +29,7 @@ user_input = nil
 while user_input != 0
   puts "\nЧто хотите купить:"
 
-  product_collection.to_a.each_with_index do |product, index|
+  product_collection.products.each_with_index do |product, index|
     puts "#{index + 1}. #{product}"
   end
   puts "0. Выход"
@@ -37,7 +37,6 @@ while user_input != 0
   user_input = STDIN.gets.to_i
 
   user_choice = product_collection.products[user_input - 1]
-
 
   if (user_input != 0) && (user_choice.amount.to_i > 0)
     puts puts "Вы выбрали: #{user_choice}"
@@ -50,7 +49,13 @@ while user_input != 0
     puts "К сожалению, этот товар уже закончился."
   else
     puts "Вы купили:"
-    client_basket.items.each { |item| puts item }
+    items_hash = Hash.new(0)
+
+    client_basket.items.each {|item| items_hash[item] += 1}
+
+    items_hash.each do |k, v|
+      puts "#{k} - #{v} шт."
+    end
 
     puts "С Вас — #{client_basket.show_basket_price} руб. Спасибо за покупки!"
   end
