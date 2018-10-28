@@ -1,9 +1,10 @@
 class Product
-  attr_reader :price, :amount
+  attr_reader :price, :amount, :total_amount
 
   def initialize(params)
     @price = params[:price]
     @amount = params[:amount]
+    @total_amount = @amount.to_i
   end
 
   def self.from_file(file_path)
@@ -17,5 +18,9 @@ class Product
 
   def to_s
     "#{price} руб. (осталось #{amount})"
+  end
+
+  def to_s_bis
+    "#{price} руб. - #{total_amount - amount} шт."
   end
 end

@@ -32,4 +32,8 @@ class Film < Product
   def to_s
     "Фильм «#{title}», #{year}, реж. #{director}, #{super}"
   end
+
+  def to_s_bis
+    "Фильм «#{title}», #{year}, реж. #{director}, #{super}"
+  end
 end

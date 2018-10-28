@@ -32,4 +32,8 @@ class Book < Product
   def to_s
     "Книга «#{title}», #{genre}, автор - #{author}, #{super}"
   end
+
+  def to_s_bis
+    "Книга «#{title}», #{genre}, автор - #{author}, #{super}"
+  end
 end

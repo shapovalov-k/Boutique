@@ -49,17 +49,10 @@ while user_input != 0
     puts "К сожалению, этот товар уже закончился."
   else
     puts "Вы купили:"
-    items_hash = Hash.new(0)
-
-    client_basket.items.each {|item| items_hash[item] += 1}
-
-    items_hash.each do |k, v|
-      puts "#{k} - #{v} шт."
-    end
+    client_basket.items.uniq.each {|item| puts item.to_s_bis}
 
     puts "С Вас — #{client_basket.show_basket_price} руб. Спасибо за покупки!"
   end
 end
-
 
 

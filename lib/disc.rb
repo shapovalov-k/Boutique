@@ -35,4 +35,8 @@ class Disc < Product
   def to_s
     "Альбом  #{artist} - «#{title}», #{genre}, #{year}, #{super}"
   end
+
+  def to_s_bis
+    "Альбом  #{artist} - «#{title}», #{genre}, #{year}, #{super}"
+  end
 end
